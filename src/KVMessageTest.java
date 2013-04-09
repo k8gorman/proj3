@@ -69,7 +69,7 @@ public class KVMessageTest {
 		InputStream is = new ByteArrayInputStream(str.getBytes());
 		KVMessage inputtest4 = new KVMessage(is);
 		assertTrue(inputtest4.getKey().equals("gold"));
-		assertTrue(inputtest4.getValue()==null);
+		assertTrue(inputtest4.getValue().equals("watch"));
 		assertTrue(inputtest4.getMsgType().equals("getreq"));
 	}
 	
@@ -99,7 +99,7 @@ public class KVMessageTest {
 			System.out.println(" getTest2Msg XML: " + getTest2Msg.toXML());
 		}catch (KVException e){
 			assertTrue(e.getMsg().getMsgType().equals("resp"));
-			assertTrue(e.getMsg().getMessage().equals("Message format incorrect"));
+			assertTrue(e.getMsg().getMessage().equals("XML Error: Received unparseable message"));
 			
 		}
 	}
