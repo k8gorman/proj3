@@ -37,6 +37,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -66,6 +68,16 @@ public class KVMessage {
 	private String value = null;
 	private String status = null;
 	private String message = null;
+	//array list used to check for valid type
+	ArrayList<String> msgTypes= new ArrayList<String>(Arrays.asList(
+			"putreq",
+			"getreq",
+			"delreq",
+			"resp"));
+	
+	
+	
+	
 	
 	public final String getKey() {
 		return key;
@@ -118,11 +130,17 @@ public class KVMessage {
 	 * @throws KVException of type "resp" with message "Message format incorrect" if msgType is unknown
 	 */
 	public KVMessage(String msgType) throws KVException {
-	    // TODO: implement me
+	    if (msgTypes.contains(msgType)){
+	    	this.msgType = msgType;
+	    }else{
+	    	throw new KVException (new KVMessage("resp", "Message format incorrect"));
+	    }
 	}
 	
 	public KVMessage(String msgType, String message) throws KVException {
-        // TODO: implement me
+        //call the KVMessage(String msgType) constructor
+		this(msgType);
+		this.message=message;
 	}
 	
 	 /***
@@ -192,7 +210,7 @@ public class KVMessage {
 		}
 		else{
 			//get the children of the first node
-			NodeList node1ChildList = thisElm.getElementsByTagName(tag).item(0).getChildNodes();
+			NodeList node1ChildList = thisList.item(0).getChildNodes();
 			Node firstChild = (Node) node1ChildList.item(0);
 			return firstChild.getNodeValue();
 		}
