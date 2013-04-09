@@ -227,10 +227,11 @@ public class KVMessage {
 	      // TODO: implement me
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = null;
-		Document newDoc = db.newDocument();
+		Document newDoc = null; 
 		//try to make a new Doc builder which is the XML base
 		try{
 			db = dbf.newDocumentBuilder();
+			newDoc = db.newDocument();
 		}catch (ParserConfigurationException e){
 			KVMessage dbMessage = new KVMessage("error in making the XML" + e.getMessage());
 			throw new KVException(dbMessage);
